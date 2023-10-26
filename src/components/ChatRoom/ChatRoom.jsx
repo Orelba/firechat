@@ -1,33 +1,30 @@
 import { useState, useRef } from 'react'
-import firebase from 'firebase/compat/app'
+import { collection, query, addDoc, orderBy, limit, serverTimestamp } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import styles from './chat-room.module.css'
 import SignOut from '../SignOut/SignOut'
 
-export default function ChatRoom({ auth, firestore }) {
+export default function ChatRoom({ auth, db }) {
   const dummy = useRef()
+  const messagesRef = collection(db, 'messages')
+  const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(25))
 
-  const messagesRef = firestore.collection('messages')
-  const query = messagesRef.orderBy('createdAt').limit(25)
-
-  const [messages] = useCollectionData(query, { idField: 'id' }) 
+  const [messages] = useCollectionData(messagesQuery)
   console.log(messages)
-
   const [formValue, setFormValue] = useState('')
 
-  const sendMessage = async(e) => {
+  const sendMessage = async (e) => {
     e.preventDefault()
     const { uid, photoURL } = auth.currentUser
 
-    await messagesRef.add({
+    await addDoc(collection(db, 'messages'), {
       text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
       uid,
       photoURL
     })
 
     setFormValue('')
-
     dummy.current.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -37,7 +34,7 @@ export default function ChatRoom({ auth, firestore }) {
       <SignOut auth={auth} />
 
       {messages && messages.map((msg, index) =>
-        <ChatMessage key={index} message={msg} auth={auth} /> // FIX: cant use msg.id as key, useCollectionData was updated.
+        <ChatMessage key={index} message={msg} auth={auth} />
       )}
 
       <div ref={dummy}></div>
@@ -56,7 +53,6 @@ export default function ChatRoom({ auth, firestore }) {
 
 function ChatMessage({ message, auth }) {
   const { text, uid, photoURL } = message
-  console.log(message.id)
 
   const messageClass = uid === auth.currentUser.uid ? styles.sent : styles.received
 

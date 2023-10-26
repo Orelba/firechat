@@ -1,11 +1,11 @@
 import styles from './sign-in.module.css'
-import firebase from 'firebase/compat/app'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Button from '../Button/Button'
 
 export default function SignIn({ auth }) {
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithPopup(provider)
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
   }
 
   return (
