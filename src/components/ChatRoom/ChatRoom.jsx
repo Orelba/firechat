@@ -53,7 +53,7 @@ export default function ChatRoom({ auth, db }) {
             placeholder='Write your message'
           />
           <button>
-            <img src="/send.svg" alt="Send" height={18} width={16} />
+            <img src="send.svg" alt="Send" height={18} width={16} />
           </button>
         </div>
       </form>
