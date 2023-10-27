@@ -1,13 +1,10 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
-
 import { useAuthState } from 'react-firebase-hooks/auth'
-
 import ChatRoom from './components/ChatRoom/ChatRoom'
 import SignIn from './components/SignIn/SignIn'
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCW2dbA3FVZ6I4NbIHhloYHkR7X9mfk7og",
   authDomain: "firechat-93661.firebaseapp.com",
@@ -19,7 +16,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-
 const auth = getAuth(app)
 const db = getFirestore(app)
 
@@ -27,13 +23,13 @@ function App() {
   const [user] = useAuthState(auth)
 
   return (
-    <>
+    <div className='interface'>
       {user ? (
         <ChatRoom auth={auth} db={db} />
       ) : (
         <SignIn auth={auth} />
       )}
-    </>
+    </div>
   )
 }
 
