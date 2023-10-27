@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { collection, query, addDoc, orderBy, limit, serverTimestamp } from 'firebase/firestore'
+import { collection, query, addDoc, orderBy, limitToLast, serverTimestamp } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import styles from './chat-room.module.css'
 import cx from 'classnames'
@@ -9,7 +9,7 @@ import SignOut from '../SignOut'
 export default function ChatRoom({ auth, db }) {
   const dummy = useRef()
   const messagesRef = collection(db, 'messages')
-  const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(25))
+  const messagesQuery = query(messagesRef, orderBy('createdAt'), limitToLast(25))
 
   const [messages] = useCollectionData(messagesQuery)
 
@@ -40,9 +40,9 @@ export default function ChatRoom({ auth, db }) {
         {messages && messages.map((msg, index) =>
           <ChatMessage key={index} message={msg} auth={auth} />
         )}
+        <span ref={dummy}></span>
       </div>
 
-      <span ref={dummy}></span>
 
       <form onSubmit={sendMessage}>
         <div className={styles['message-input']}>
