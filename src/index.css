@@ -13,6 +13,8 @@ html {
 
   /* Stretch to full viewport in mobile too */
   min-height: 100%;
+  height: fill-available;
+  height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
 }
@@ -27,6 +29,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: fill-available;
+  min-height: -webkit-fill-available;
 }
 
 *,
