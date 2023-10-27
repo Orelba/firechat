@@ -51,6 +51,7 @@
 .message-input {
   height: 2.5rem;
   position: relative;
+  margin-top: 0.313rem;
 }
 
 .message-input input {

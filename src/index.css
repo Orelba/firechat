@@ -11,17 +11,16 @@ html {
   box-sizing: border-box;
   font-size: 16px;
 
-  /* Stretch to full viewport in mobile too */
-  min-height: 100%;
   height: fill-available;
   height: -webkit-fill-available;
-  display: flex;
-  flex-direction: column;
 }
 
 body {
   flex-grow: 1;
   width: 100%;
+  min-height: 100vh;
+  min-height: fill-available;
+  min-height: -webkit-fill-available;
 }
 
 #root {
@@ -29,8 +28,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  min-height: fill-available;
-  min-height: -webkit-fill-available;
 }
 
 *,
@@ -108,6 +105,6 @@ img {
 
 @media only screen and (max-width: 600px) {
   html {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
