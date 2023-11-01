@@ -1,84 +1,40 @@
-import { useState, useRef } from 'react'
-import { collection, query, addDoc, orderBy, limitToLast, serverTimestamp } from 'firebase/firestore'
+import { useRef, useEffect } from 'react'
+import { collection, query, orderBy, limitToLast } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import styles from './chat-room.module.css'
-import cx from 'classnames'
-import Logo from '../Logo/Logo'
-import SignOut from '../SignOut'
+import TopBar from './TopBar/TopBar'
+import MessageList from './MessageList/MessageList'
+import MessageInput from './MessageInput/MessageInput'
 
 export default function ChatRoom({ auth, db }) {
   const dummy = useRef()
-  const messagesRef = collection(db, 'messages')
+
+  const messagesRef = collection(db, 'messages') // Change back to 'messages' and delete firebase rule
   const messagesQuery = query(messagesRef, orderBy('createdAt'), limitToLast(25))
+  const [messages, loading] = useCollectionData(messagesQuery)
 
-  const [messages] = useCollectionData(messagesQuery)
-
-  const [formValue, setFormValue] = useState('')
-
-  const sendMessage = async (e) => {
-    e.preventDefault()
-    if (formValue !== '') {
-      const { uid, photoURL } = auth.currentUser
-
-      await addDoc(collection(db, 'messages'), {
-        text: formValue,
-        createdAt: serverTimestamp(),
-        uid,
-        photoURL
-      })
-
-      setFormValue('')
-      dummy.current.scrollIntoView({ behavior: 'smooth' })
-    }
+  const scrollDown = (behavior) => {
+    dummy.current.scrollIntoView({ behavior: behavior })
   }
+
+  useEffect(() => {
+    scrollDown('instant')
+  }, [loading])
 
   return (
     <>
       <TopBar auth={auth} />
 
-      <div className={styles['message-list']}>
-        {messages && messages.map((msg, index) =>
-          <ChatMessage key={index} message={msg} auth={auth} />
-        )}
-        <span ref={dummy}></span>
-      </div>
+      <MessageList
+        auth={auth}
+        messages={messages}
+        ref={dummy}
+      />
 
-
-      <form onSubmit={sendMessage}>
-        <div className={styles['message-input']}>
-          <input
-            type="text"
-            value={formValue}
-            onChange={(e) => setFormValue(e.target.value)}
-            placeholder='Write your message'
-          />
-          <button>
-            <img src="send.svg" alt="Send" height={18} width={16} />
-          </button>
-        </div>
-      </form>
+      <MessageInput
+        auth={auth}
+        dbCollectionRef={messagesRef}
+        scrollDown={scrollDown}
+      />
     </>
-  )
-}
-
-function TopBar({ auth }) {
-  return (
-    <div className={styles.topbar}>
-      <Logo />
-      <SignOut auth={auth} />
-    </div>
-  )
-}
-
-function ChatMessage({ message, auth }) {
-  const { text, uid, photoURL } = message
-
-  const messageClass = uid === auth.currentUser.uid ? styles.sent : styles.received
-
-  return (
-    <div className={cx(styles.message, messageClass)}>
-      {messageClass === styles.received && <img src={photoURL} alt="User Avatar" />}
-      <p>{text}</p>
-    </div>
   )
 }

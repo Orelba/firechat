@@ -1,0 +1,19 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.button {
+  padding: 0.4rem;
+  background-color: transparent;
+}
+
+.sign-out-img {
+  --size: 1.563rem;
+
+  height: var(--size);
+  width: var(--size);
+  vertical-align: middle;
+}

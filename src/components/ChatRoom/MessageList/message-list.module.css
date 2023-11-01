@@ -1,0 +1,48 @@
+/* Message List */
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: auto;
+  padding: 0 0.5rem;
+  overflow-y: scroll;
+}
+
+.message {
+  border-radius: 1.25rem;
+  width: fit-content;
+  max-width: 90%;
+  word-break: break-word;
+
+  position: relative;
+}
+
+/* Chat Message */
+.message img {
+  --size: 1.5rem;
+
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+
+  position: absolute;
+  right: -0.563rem;
+  bottom: 0;
+}
+
+.sent {
+  background-color: #272A35;
+  padding: 0.625rem 0.875rem;
+  place-self: end center;
+}
+
+.received {
+  background-color: #373E4E;
+  padding: 0.625rem 1.375rem 0.625rem 0.875rem;
+}
+
+/* Dummy */
+.dummy {
+  display: inline-block;
+  min-height: 1px;
+}
