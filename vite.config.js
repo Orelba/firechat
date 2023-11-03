@@ -38,8 +38,8 @@ const manifestForPlugIn = {
     theme_color: '#292f3f',
     background_color: '#E5E5E5',
     display: 'standalone',
-    scope: '/',
-    start_url: '/',
+    scope: '/firechat/',
+    start_url: '/firechat/',
     orientation: 'portrait',
   },
 }
