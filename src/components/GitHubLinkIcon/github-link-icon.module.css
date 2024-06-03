@@ -1,0 +1,8 @@
+.github-img {
+  --size: 1.563rem;
+
+  height: var(--size);
+  width: var(--size);
+  vertical-align: middle;
+  transition: scale 0.3s;
+}

@@ -1,12 +1,16 @@
 import styles from './topbar.module.css'
 import Logo from '../../Logo/Logo'
 import Button from '../../Button/Button'
+import GitHubLinkIcon from '../../GitHubLinkIcon/GitHubLinkIcon'
 
 export default function TopBar({ auth }) {
   return (
     <div className={styles.topbar}>
       <Logo />
-      <SignOut auth={auth} />
+      <div className={styles['topbar-buttons']}>
+        <GitHubLinkIcon />
+        <SignOut auth={auth} />
+      </div>
     </div>
   )
 }
@@ -16,10 +20,6 @@ function SignOut({ auth }) {
     <Button
       onClick={() => auth.signOut()}
       className={styles.button}
-      style={{
-        padding: '0.4rem',
-        backgroundColor: 'transparent'
-      }}
     >
       <img
         src="sign-out.png"

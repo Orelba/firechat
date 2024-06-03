@@ -1,11 +1,19 @@
 .topbar {
+  --icon-size: 1.563rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.25rem;
 }
 
-.button {
+.topbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.topbar-buttons>.button {
   padding: 0.4rem;
   background-color: transparent;
 }

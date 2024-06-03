@@ -2,6 +2,7 @@ import styles from './sign-in.module.css'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Logo from '../Logo/Logo'
 import Button from '../Button/Button'
+import GitHubLinkIcon from '../GitHubLinkIcon/GitHubLinkIcon'
 
 export default function SignIn({ auth }) {
   const signInWithGoogle = () => {
@@ -17,6 +18,7 @@ export default function SignIn({ auth }) {
       </div>
       <h2 className={styles.thin}>Real-time Chat powered by Firebase</h2>
       <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+      <GitHubLinkIcon />
     </div>
   )
 }
